@@ -1,0 +1,17 @@
+[Unit]
+Description=meshcore TCP-Multiplexer
+After=multi-user.target
+
+[Service]
+Type=simple
+User=*youruser*
+
+WorkingDirectory=/home/*youruser*/meshcore_multitcp/
+ExecStartPre=/bin/sleep 5
+ExecStart=/home/*youruser*/meshcore_multitcp/meshcore_multitcp.py -s *yourip*:5000 -d *deviceip*:5000
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

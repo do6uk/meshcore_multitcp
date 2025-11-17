@@ -1,0 +1,111 @@
+"""
+based on
+https://github.com/meshcore-dev/meshcore_py
+
+modified by Rainer Fiedler - do6uk
+https://github.com/do6uk/meshcore_multitcp
+
+"""
+
+from enum import Enum
+
+class BinaryReqType(Enum):
+	STATUS = 0x01
+	KEEP_ALIVE = 0x02
+	TELEMETRY = 0x03
+	MMA = 0x04
+	ACL = 0x05
+
+# Packet prefixes for the protocol
+class PacketType(Enum):
+	OK = 0
+	ERROR = 1
+	CONTACT_START = 2
+	CONTACT = 3
+	CONTACT_END = 4
+	SELF_INFO = 5
+	MSG_SENT = 6
+	CONTACT_MSG_RECV = 7
+	CHANNEL_MSG_RECV = 8
+	CURRENT_TIME = 9
+	NO_MORE_MSGS = 10
+	CONTACT_URI = 11
+	BATTERY = 12
+	DEVICE_INFO = 13
+	PRIVATE_KEY = 14
+	DISABLED = 15
+	CONTACT_MSG_RECV_V3 = 16
+	CHANNEL_MSG_RECV_V3 = 17
+	CHANNEL_INFO = 18
+	SIGN_START = 19
+	SIGNATURE = 20
+	CUSTOM_VARS = 21
+	BINARY_REQ = 50
+	FACTORY_RESET = 51
+
+	# Push notifications
+	ADVERTISEMENT = 0x80
+	PATH_UPDATE = 0x81
+	ACK = 0x82
+	MESSAGES_WAITING = 0x83
+	RAW_DATA = 0x84
+	LOGIN_SUCCESS = 0x85
+	LOGIN_FAILED = 0x86
+	STATUS_RESPONSE = 0x87
+	LOG_DATA = 0x88
+	TRACE_DATA = 0x89
+	PUSH_CODE_NEW_ADVERT = 0x8A
+	TELEMETRY_RESPONSE = 0x8B
+	BINARY_RESPONSE = 0x8C
+	PATH_DISCOVERY_RESPONSE = 0x8D
+
+	@classmethod
+	def exists(cls, val):
+		try:
+			return cls(val).name
+		except:
+			return False
+
+class CmdPacketType(Enum):
+	NONE = 0
+	APP_START = 1
+	SEND_TXT_MSG = 2
+	SEND_CHANNEL_TXT_MSG = 3
+	GET_CONTACTS = 4
+	GET_DEVICE_TIME = 5
+	SET_DEVICE_TIME = 6
+	SELF_ADVERT = 7
+	SET_ADVERT_NAME = 8
+	ADD_UPDATE_CONTACT = 9
+	SYNC_NEXT_MESSAGE = 10
+	SET_RADIO_PARAMS = 11
+	SET_RADIO_TX_POWER = 12
+	RESET_PATH = 13
+	SET_ADVERT_LATLON = 14
+	REMOVE_CONTACT = 15
+	SHARE_CONTACT = 16
+	EXPORT_CONTACT = 17
+	IMPORT_CONTACT = 18
+	REBOOT = 19
+	GET_BATT_AND_STORAGE = 20
+	SET_TUNING_PARAMS = 21
+	SEND_RAW_DATA = 25
+	SEND_LOGIN = 26
+	SEND_STATUS_REQ = 27
+	GET_CHANNEL = 31
+	SEND_TRACE_PATH = 36
+	SET_OTHER_PARAMS = 38
+	SEND_TELEMETRY_REQ = 39
+	GET_CUSTOM_VARS = 40
+	SET_CUSTOM_VAR = 41
+	GET_ADVERT_PATH = 42
+	GET_TUNING_PARAMS = 43
+	SEND_BINARY_REQ = 50
+	FACTORY_RESET = 51
+	
+	@classmethod
+	def exists(cls, val):
+		try:
+			return cls(val).name
+		except:
+			return False
