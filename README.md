@@ -17,10 +17,10 @@ multiplexing a mescore tcp-connected companion to multiple clients as cli-chat, 
 
 python3 meshcore_multitcp.py -d Device-IP:PORT -s Server-IP:PORT [-q|-v]
 
--d sets IP & port of your companion radio
--s sets IP & port of the machine this script listens to clients
--q minimizes CLI-output
--v maximizes CLI-output
+/-d sets IP & port of your companion radio
+/-s sets IP & port of the machine this script listens to clients
+/-q minimizes CLI-output
+/-v maximizes CLI-output
 
 After meshcore_multitcp is running you can connect your clients to IP/port set with -s
 
