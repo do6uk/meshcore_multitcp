@@ -58,16 +58,28 @@ contacts = {}
 channels = {}
 
 def get_ip(sock_handle):
-	host, port = sock_handle.getpeername()
-	return host
+	try:
+		host, port = sock_handle.getpeername()
+		return host
+	except:
+		logger.error(f"[get_ip] while getpeername()")
+		return False
 
 def get_ip_port(sock_handle):
-	host, port = sock_handle.getpeername()
-	return host+':'+str(port)
+	try:
+		host, port = sock_handle.getpeername()
+		return host+':'+str(port)
+	except:
+		logger.error(f"[get_ip_port] while getpeername()")
+		return False
 
 def get_client_name(sock_handle):
 	global client_names
-	host, port = sock_handle.getpeername()
+	try:
+		host, port = sock_handle.getpeername()
+	except:
+		logger.error(f"[get_client_name] while getpeername()")
+		return False
 	
 	try:
 		client_name = host+' ('+client_names[host+':'+str(port)]+')'
@@ -114,7 +126,7 @@ def handle_device_data(data: bytearray):
 	
 		packet_type_value = data[3]
 		logger.debug(f"[parse_device_data] raw-data: {data.hex()}")
-		
+	
 		if packet_type_value in ignore_packets_device:
 			logger.debug(f"[parse_device_data] packet {PacketType(packet_type_value).name} ignored")
 			return False
@@ -229,7 +241,7 @@ def device_write(message):
 			device.send(message)
 			return True
 		
-		except socket.error:
+		except (socket.error, BrokenPipeError):
 			logger.error(f"DEVICE: lost connection on write {get_ip(device)}")
 			device.close()
 			return False
@@ -251,7 +263,7 @@ def client_forward(message, message_type):
 		try:
 			client.send(message)
 		
-		except socket.error:
+		except (socket.error, BrokenPipeError):
 			logger.error(f"CLIENT {get_client_name(client)} lost connection on write")
 			if client in clients:
 				index = clients.index(client)
@@ -281,7 +293,7 @@ def client_receive(client):
 			
 			device_write(message)
 		
-		except socket.error:
+		except (socket.error, BrokenPipeError):
 			logger.error(f"CLIENT {get_client_name(device)} lost connection on read")
 			if client in clients:
 				index = clients.index(client)
