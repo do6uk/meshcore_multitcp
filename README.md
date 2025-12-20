@@ -25,7 +25,20 @@ python3 meshcore_multitcp.py -d Device-IP:PORT -s Server-IP:PORT [-q|-v]
 
 -v maximizes CLI-output
 
+-f sets secondary IP & port for listening to clients using message-storage (see S&F)
+
+-sql activates message-storage for clients which connect at second ip/port given by -f (see S&F)
+
+
 After meshcore_multitcp is running you can connect your clients to IP/port set with -s
+
+## S&F - store & forward messages
+
+Using option -sql meshcore-multitcp will store all incomming private & channel messages in local sqlite3-database. 
+If client connects at secondary ip/port given by -f meshcore-multitcp will forward all stored messages since last message exchange.
+Dumping large number of messages can cause hung up clients and messages could be lost.
+
+WARNING: Actually theres no database-clean-up - so if you connect a new client first time, meshcore-multitcp will try to forward all known messages.
 
 ## what you should know before you start
 
