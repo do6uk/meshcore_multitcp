@@ -46,3 +46,5 @@ This software comes as it is without any guarantee to work stable and secure.
 It contains modified parts of the original meshcore_py-scripts.
 There are several things untested und a lot of bugs in it. 
 Some client-app functions doesn't work as expected and could throw timeout-errors or crash the whole app.
+
+TEST
